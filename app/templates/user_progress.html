@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>個人のトレーニング実施状況</h1>
+
+<h2>現在行っているトレーニング</h2>
+<table>
+    <tr>
+        <th>トレーニング名</th>
+        <th>カテゴリー</th>
+    </tr>
+    {% for training in in_progress %}
+    <tr>
+        <td>{{ training.training.name }}</td>
+        <td>{{ training.training.category }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>達成したトレーニング</h2>
+<table>
+    <tr>
+        <th>トレーニング名</th>
+        <th>カテゴリー</th>
+    </tr>
+    {% for training in completed %}
+    <tr>
+        <td>{{ training.training.name }}</td>
+        <td>{{ training.training.category }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

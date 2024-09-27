@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>トレーニングの追加</h1>
+<form method="POST">
+    <div>
+        <label for="name">トレーニング名:</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+        <label for="category">カテゴリー:</label>
+        <input type="text" id="category" name="category" required>
+    </div>
+    <div>
+        <label for="description">説明:</label>
+        <textarea id="description" name="description" required></textarea>
+    </div>
+    <div>
+        <label for="points">意識するポイント:</label>
+        <textarea id="points" name="points" required></textarea>
+    </div>
+    <div>
+        <label for="video_url">動画URL:</label>
+        <input type="url" id="video_url" name="video_url">
+    </div>
+    <button type="submit">トレーニングを追加</button>
+</form>
+{% endblock %}

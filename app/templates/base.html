@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トレーニングアプリ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding">
+                <h1><span class="highlight">トレーニング</span> アプリ</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('main.index') }}">ホーム</a></li>
+                    <li><a href="{{ url_for('main.trainings') }}">トレーニング一覧</a></li>
+                    {% if current_user.is_authenticated %}
+                        <li><a href="{{ url_for('main.progress') }}">進捗状況</a></li>
+                        {% if current_user.is_admin %}
+                            <li><a href="{{ url_for('main.admin') }}">管理者ページ</a></li>
+                        {% endif %}
+                        <li><a href="{{ url_for('main.logout') }}">ログアウト</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('main.login') }}">ログイン</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>

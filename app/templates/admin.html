@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>管理者ページ</h1>
+<h2>ユーザー一覧</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>ユーザー名</th>
+            <th>管理者権限</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ "はい" if user.is_admin else "いいえ" }}</td>
+            <td>
+                <form action="{{ url_for('main.toggle_admin', user_id=user.id) }}" method="POST">
+                    <button type="submit">
+                        {% if user.is_admin %}
+                            管理者権限を削除
+                        {% else %}
+                            管理者権限を付与
+                        {% endif %}
+                    </button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>トレーニング一覧</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>名前</th>
+            <th>カテゴリー</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for training in trainings %}
+        <tr>
+            <td>{{ training.id }}</td>
+            <td>{{ training.name }}</td>
+            <td>{{ training.category }}</td>
+            <td>
+                <a href="{{ url_for('main.edit_training', training_id=training.id) }}">編集</a>
+                <form action="{{ url_for('main.delete_training', training_id=training.id) }}" method="POST" style="display: inline;">
+                    <button type="submit" onclick="return confirm('本当に削除しますか？');">削除</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('main.add_training') }}" class="btn">新しいトレーニングを追加</a>
+{% endblock %}
