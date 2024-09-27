@@ -92,3 +92,39 @@ th, td {
 th {
     background-color: #f2f2f2;
 }
+
+
+/* 既存のスタイル ... */
+
+.training {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+}
+
+.training h2 {
+    color: #333;
+    margin-top: 0;
+}
+
+.training form {
+    margin-top: 15px;
+}
+
+.training select, .training button {
+    margin-top: 5px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #333;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn:hover {
+    background-color: #444;
+}
