@@ -14,7 +14,7 @@ body {
 }
 
 header {
-    background: #333; /* ヘッダーの背景色を濃いグレーに変更 */
+    background: #2196F3; /* ヘッダーの背景色を青に変更 */
     color: #fff;
     padding-top: 30px;
     min-height: 70px;
@@ -53,7 +53,7 @@ header nav {
 }
 
 header .highlight, header .current a {
-    color: #e8491d; /* ハイライトの色をオレンジに変更 */
+    color: #ffffff /* ハイライトの色をオレンジに変更 */
     font-weight: bold;
 }
 

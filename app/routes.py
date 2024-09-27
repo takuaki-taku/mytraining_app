@@ -31,7 +31,7 @@ def toggle_admin(user_id):
     user.is_admin = not user.is_admin
     db.session.commit()
     flash(f"ユーザー {user.username} の管理者権限が{'付与' if user.is_admin else '削除'}されました。")
-    return redirect(url_for('main.admin'))
+    return redirect(url_for('auth.admin'))
 
 @bp.route('/admin/edit_training/<int:training_id>', methods=['GET', 'POST'])
 @login_required
@@ -46,8 +46,9 @@ def edit_training(training_id):
         training.video_url = request.form['video_url']
         db.session.commit()
         flash('トレーニングが更新されました。')
-        return redirect(url_for('main.admin'))
-    return render_template('edit_training.html', training=training)
+        return redirect(url_for('auth.admin'))
+    return render_template('main.edit_training.html', training=training)
+
 
 @bp.route('/admin/delete_training/<int:training_id>', methods=['POST'])
 @login_required
@@ -57,7 +58,7 @@ def delete_training(training_id):
     db.session.delete(training)
     db.session.commit()
     flash('トレーニングが削除されました。')
-    return redirect(url_for('main.admin'))
+    return redirect(url_for('auth.admin'))
 
 @bp.route('/')
 def index():
@@ -105,7 +106,7 @@ def register():
         user = User.query.filter_by(username=username).first()
         if user:
             flash('Username already exists')
-            return redirect(url_for('main.register'))
+            return redirect(url_for('auth.register'))
         
         new_user = User(username=username)
         new_user.set_password(password)
@@ -113,7 +114,7 @@ def register():
         db.session.commit()
         
         flash('Registration successful. Please log in.')
-        return redirect(url_for('main.login'))
+        return redirect(url_for('auth.login'))
     
     return render_template('register.html')
 
@@ -137,7 +138,7 @@ def add_training():
         flash('New training added successfully.')
         return redirect(url_for('main.trainings'))
     
-    return render_template('add_training.html')
+    return render_template('main.add_training.html')
 
 @bp.route('/update_training_status/<int:training_id>', methods=['POST'])
 @login_required
