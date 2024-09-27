@@ -84,7 +84,10 @@ def logout():
 @bp.route('/trainings')
 def trainings():
     trainings = Training.query.all()
-    return render_template('trainings.html', trainings=trainings)
+    user_trainings = {}
+    if current_user.is_authenticated:
+        user_trainings = {ut.training_id: ut.status for ut in UserTraining.query.filter_by(user_id=current_user.id).all()}
+    return render_template('trainings.html', trainings=trainings, user_trainings=user_trainings)
 
 @bp.route('/progress')
 @login_required
@@ -138,8 +141,7 @@ def add_training():
 
 @bp.route('/update_training_status/<int:training_id>', methods=['POST'])
 @login_required
-def update_training_status():
-    training_id = request.form['training_id']
+def update_training_status(training_id):
     new_status = request.form['status']
     
     user_training = UserTraining.query.filter_by(user_id=current_user.id, training_id=training_id).first()
@@ -151,6 +153,5 @@ def update_training_status():
         db.session.add(new_user_training)
     
     db.session.commit()
-    flash('Training status updated successfully.')
-    return redirect(url_for('main.progress'))
-
+    flash('トレーニングの状態が更新されました。')
+    return redirect(url_for('main.trainings'))

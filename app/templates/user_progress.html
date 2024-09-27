@@ -11,8 +11,8 @@
     </tr>
     {% for training in in_progress %}
     <tr>
-        <td>{{ training.training.name }}</td>
-        <td>{{ training.training.category }}</td>
+        <td>{{ training.name }}</td>
+        <td>{{ training.category }}</td>
     </tr>
     {% endfor %}
 </table>
@@ -25,8 +25,8 @@
     </tr>
     {% for training in completed %}
     <tr>
-        <td>{{ training.training.name }}</td>
-        <td>{{ training.training.category }}</td>
+        <td>{{ training.name }}</td>
+        <td>{{ training.category }}</td>
     </tr>
     {% endfor %}
 </table>
