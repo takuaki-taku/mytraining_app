@@ -4,6 +4,7 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
+    background-color: #f8f8f8; /* 背景色を薄いグレーに変更 */
 }
 
 .container {
@@ -13,7 +14,7 @@ body {
 }
 
 header {
-    background: #333;
+    background: #333; /* ヘッダーの背景色を濃いグレーに変更 */
     color: #fff;
     padding-top: 30px;
     min-height: 70px;
@@ -52,7 +53,7 @@ header nav {
 }
 
 header .highlight, header .current a {
-    color: #e8491d;
+    color: #e8491d; /* ハイライトの色をオレンジに変更 */
     font-weight: bold;
 }
 
@@ -90,7 +91,7 @@ th, td {
 }
 
 th {
-    background-color: #f2f2f2;
+    background-color: #f2f2f2; /* テーブルヘッダーの背景色を薄いグレーに変更 */
 }
 
 
@@ -99,8 +100,9 @@ th {
 .training {
     margin-bottom: 30px;
     padding: 20px;
-    background-color: #f4f4f4;
+    background-color: #fff; /* トレーニングセクションの背景色を白に変更 */
     border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 影を追加 */
 }
 
 .training h2 {
@@ -119,12 +121,12 @@ th {
 .btn {
     display: inline-block;
     padding: 10px 15px;
-    background-color: #333;
+    background-color: #007bff; /* ボタンの背景色を青に変更 */
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
 }
 
 .btn:hover {
-    background-color: #444;
+    background-color: #0069d9; /* ボタンのホバー時の背景色を濃い青に変更 */
 }
