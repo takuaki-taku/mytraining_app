@@ -34,6 +34,7 @@ header ul {
     list-style: none;
 }
 
+
 header li {
     display: inline;
     padding: 0 20px 0 20px;
@@ -62,7 +63,7 @@ header a:hover {
     font-weight: bold;
 }
 
-.overview-image {
+.index-image {
     max-width: 100%;
     height: auto;
     max-height: 400px;

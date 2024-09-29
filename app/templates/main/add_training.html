@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>トレーニングの追加</h1>
+<h1>新しいトレーニングの追加</h1>
 <form method="POST">
     <div>
         <label for="name">トレーニング名:</label>
@@ -23,6 +23,7 @@
         <label for="video_url">動画URL:</label>
         <input type="url" id="video_url" name="video_url">
     </div>
-    <button type="submit">トレーニングを追加</button>
+    <button type="submit">追加</button>
 </form>
+<a href="{{ url_for('main.admin') }}">管理者ページに戻る</a>
 {% endblock %}

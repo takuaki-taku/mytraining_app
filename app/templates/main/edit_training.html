@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>トレーニングの編集</h1>
+<form method="POST">
+    <div>
+        <label for="name">トレーニング名:</label>
+        <input type="text" id="name" name="name" value="{{ training.name }}" required>
+    </div>
+    <div>
+        <label for="category">カテゴリー:</label>
+        <input type="text" id="category" name="category" value="{{ training.category }}" required>
+    </div>
+    <div>
+        <label for="description">説明:</label>
+        <textarea id="description" name="description" required>{{ training.description }}</textarea>
+    </div>
+    <div>
+        <label for="points">意識するポイント:</label>
+        <textarea id="points" name="points" required>{{ training.points }}</textarea>
+    </div>
+    <div>
+        <label for="video_url">動画URL:</label>
+        <input type="url" id="video_url" name="video_url" value="{{ training.video_url }}">
+    </div>
+    <button type="submit">更新</button>
+</form>
+<a href="{{ url_for('main.admin') }}">管理者ページに戻る</a>
+{% endblock %}

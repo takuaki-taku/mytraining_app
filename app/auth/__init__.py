@@ -2,4 +2,6 @@ from flask import Blueprint
 
 bp = Blueprint('auth', __name__)
 
-from app.auth import routes
+
+# 循環インポートを避けるために、この行を下に移動します。
+from app.auth import routes 
