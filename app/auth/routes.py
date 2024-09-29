@@ -1,9 +1,9 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, login_required
-from werkzeug.security import check_password_hash
-from app import db
-from app.auth import bp
 from app.models import User
+from app import db
+
+bp = Blueprint('auth', __name__)
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -11,7 +11,7 @@ def login():
         username = request.form['username']
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
-        if user and check_password_hash(user.password_hash, password):
+        if user and user.check_password(password):
             login_user(user)
             return redirect(url_for('main.index'))
         flash('Invalid username or password')
@@ -28,14 +28,18 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+
         user = User.query.filter_by(username=username).first()
         if user:
             flash('Username already exists')
-        else:
-            new_user = User(username=username)
-            new_user.set_password(password)
-            db.session.add(new_user)
-            db.session.commit()
-            flash('Registered successfully. Please log in.')
-            return redirect(url_for('auth.login'))
+            return redirect(url_for('auth.register'))
+
+        new_user = User(username=username)
+        new_user.set_password(password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash('Registration successful. Please log in.')
+        return redirect(url_for('auth.login'))
+
     return render_template('auth/register.html')
