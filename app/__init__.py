@@ -10,7 +10,7 @@ login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 
 def create_app(config_class=Config):
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='static', static_url_path='/static')  # static_folder を None に設定
     app.config.from_object(config_class)
 
     db.init_app(app)
@@ -21,11 +21,15 @@ def create_app(config_class=Config):
     app.register_blueprint(auth_bp, url_prefix='/auth')
 
     from app.main import bp as main_bp
-    app.register_blueprint(main_bp) # url_prefix を削除
+    app.register_blueprint(main_bp)
 
     @app.errorhandler(404)
     def not_found_error(error):
         return render_template('404.html'), 404
+
+    @app.errorhandler(500)
+    def internal_error(error):
+        return render_template('500.html'), 500
 
     return app
 
