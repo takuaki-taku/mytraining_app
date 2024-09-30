@@ -1,6 +1,6 @@
 /* app/static/css/style.css */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Times New Roman', serif; /* レトロな雰囲気のフォント */
     line-height: 1.6;
     margin: 0;
     padding: 0;
@@ -54,7 +54,7 @@ header nav {
 }
 
 header .highlight, header .current a {
-    color: #ffffff /* ハイライトの色をオレンジに変更 */
+    color: #ffffff;
     font-weight: bold;
 }
 
@@ -129,5 +129,6 @@ th {
 }
 
 .btn:hover {
-    background-color: #0069d9; /* ボタンのホバー時の背景色を濃い青に変更 */
+    background-color: #0069d9; 
 }
+
