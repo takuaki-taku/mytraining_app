@@ -89,8 +89,10 @@ db.sqlite3
 db.sqlite3-journal
 
 # Flask stuff:
-instance/
+instance/*
 .webassets-cache
+!instance/training_app.db
+!instance/app.db
 
 # Scrapy stuff:
 .scrapy
@@ -191,5 +193,4 @@ cython_debug/
 
 
 
-!instance/training_app.db
-!instance/app.db
+
