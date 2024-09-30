@@ -190,4 +190,6 @@ cython_debug/
 400: Invalid request
 
 
-!training_app.db
+
+!instance/training_app.db
+!instance/app.db
