@@ -74,6 +74,16 @@ training_app/
 3. ログイン後、トレーニング一覧や進捗状況を確認できる
 4. 管理者は管理者ページからユーザーやトレーニングを管理できる
 
+#「確認用サンプルアカウント」
+管理者
+Username : admin
+Password:  your-admin-psssword
+
+一般
+Username : sample
+Password :  sample01
+
+
 ## 管理者アカウントの作成
 1. アプリケーションを実行した状態で、別のターミナルウィンドウを開く
 2. Flaskシェルを起動する
