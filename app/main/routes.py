@@ -1,3 +1,9 @@
+"""
+メインアプリケーションのルートを定義するモジュール。
+
+このモジュールは、トレーニング一覧、トレーニング詳細、ユーザーの進捗状況、管理者ページなどのルートを定義しています。
+"""
+
 from flask import render_template, flash, redirect, url_for, request, jsonify
 from flask_login import current_user, login_required
 from app import db
@@ -8,11 +14,13 @@ from app.models import User, Training, UserTraining
 @bp.route("/")
 @bp.route("/index")
 def index():
+    """メインページを表示する。"""
     return render_template("main/index.html")
 
 
 @bp.route("/trainings")
 def trainings():
+    """トレーニング一覧を表示する。"""
     search = request.args.get("search", "")
     trainings = Training.query.filter(Training.name.ilike(f"%{search}%")).all()
     user_trainings = {}
@@ -31,6 +39,7 @@ def trainings():
 
 @bp.route("/training/<int:training_id>")
 def training_details(training_id):
+    """トレーニングの詳細情報をJSON形式で返す。"""
     training = Training.query.get_or_404(training_id)
     return jsonify(
         {
@@ -46,6 +55,7 @@ def training_details(training_id):
 @bp.route("/progress")
 @login_required
 def progress():
+    """ユーザーのトレーニング進捗状況を表示する。"""
     user_trainings = UserTraining.query.filter_by(user_id=current_user.id).all()
     in_progress = []
     completed = []
@@ -65,6 +75,7 @@ def progress():
 
 @bp.route("/admin")
 def admin():
+    """管理者ページを表示する。"""
     users = User.query.all()
     trainings = Training.query.all()
     return render_template("main/admin.html", users=users, trainings=trainings)
@@ -72,6 +83,7 @@ def admin():
 
 @bp.route("/add_training", methods=["GET", "POST"])
 def add_training():
+    """新しいトレーニングを追加する。"""
     if request.method == "POST":
         # フォームの処理
         name = request.form["name"]
@@ -95,6 +107,7 @@ def add_training():
 
 @bp.route("/toggle_admin/<int:user_id>", methods=["POST"])
 def toggle_admin(user_id):
+    """ユーザーの管理者権限を切り替える。"""
     user = User.query.get_or_404(user_id)
     user.is_admin = not user.is_admin
     db.session.commit()
@@ -105,7 +118,7 @@ def toggle_admin(user_id):
 @bp.route("/delete_user/<int:user_id>", methods=["POST"])
 @login_required
 def delete_user(user_id):
-
+    """ユーザーを削除する。"""
     user = User.query.get_or_404(user_id)
     db.session.delete(user)
     db.session.commit()
@@ -115,6 +128,7 @@ def delete_user(user_id):
 
 @bp.route("/edit_training/<int:training_id>", methods=["GET", "POST"])
 def edit_training(training_id):
+    """トレーニング情報を編集する。"""
     training = Training.query.get_or_404(training_id)
     if request.method == "POST":
         training.name = request.form["name"]
@@ -127,6 +141,7 @@ def edit_training(training_id):
 
 @bp.route("/delete_training/<int:training_id>", methods=["POST"])
 def delete_training(training_id):
+    """トレーニングを削除する。"""
     training = Training.query.get_or_404(training_id)
     db.session.delete(training)
     db.session.commit()
@@ -136,6 +151,7 @@ def delete_training(training_id):
 
 @bp.route("/update_training_status/<int:training_id>", methods=["POST"])
 def update_training_status(training_id):
+    """ユーザーのトレーニングステータスを更新する。"""
     status = request.form.get("status")
     user_training = UserTraining.query.filter_by(
         user_id=current_user.id, training_id=training_id

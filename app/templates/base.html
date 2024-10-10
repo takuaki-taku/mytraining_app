@@ -21,7 +21,7 @@
                         <div class="hidden md:block">
                             <div class="ml-10 flex items-baseline space-x-4">
                                 <a href="{{ url_for('main.index') }}"
-                                    class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium">ホーム</a>
+                                    class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">ホーム</a>
                                 <a href="{{ url_for('main.trainings') }}"
                                     class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">トレーニング一覧</a>
                                 {% if current_user.is_authenticated %}
