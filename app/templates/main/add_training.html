@@ -1,29 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>新しいトレーニングの追加</h1>
-<form method="POST">
-    <div>
-        <label for="name">トレーニング名:</label>
-        <input type="text" id="name" name="name" required>
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="px-8 py-6 max-w-md mx-auto bg-white rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold mb-6">新しいトレーニングの追加</h1>
+        <form method="POST" class="space-y-6">
+            <div>
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-700">トレーニング名</label>
+                <input type="text" id="name" name="name" required
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="トレーニング名を入力">
+            </div>
+            <div>
+                <label for="category" class="block mb-2 text-sm font-medium text-gray-700">カテゴリー</label>
+                <input type="text" id="category" name="category" required
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="カテゴリーを入力">
+            </div>
+            <div>
+                <label for="description" class="block mb-2 text-sm font-medium text-gray-700">説明</label>
+                <textarea id="description" name="description" required
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 h-24"></textarea>
+            </div>
+            <div>
+                <label for="points" class="block mb-2 text-sm font-medium text-gray-700">意識するポイント</label>
+                <textarea id="points" name="points" required
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 h-24"></textarea>
+            </div>
+            <div>
+                <label for="video_url" class="block mb-2 text-sm font-medium text-gray-700">動画URL</label>
+                <input type="url" id="video_url" name="video_url"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                    placeholder="https://example.com/video">
+            </div>
+            <button type="submit"
+                class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">追加</button>
+        </form>
+        <a href="{{ url_for('main.admin') }}" class="text-blue-500 hover:underline">管理者ページに戻る</a>
     </div>
-    <div>
-        <label for="category">カテゴリー:</label>
-        <input type="text" id="category" name="category" required>
-    </div>
-    <div>
-        <label for="description">説明:</label>
-        <textarea id="description" name="description" required></textarea>
-    </div>
-    <div>
-        <label for="points">意識するポイント:</label>
-        <textarea id="points" name="points" required></textarea>
-    </div>
-    <div>
-        <label for="video_url">動画URL:</label>
-        <input type="url" id="video_url" name="video_url">
-    </div>
-    <button type="submit">追加</button>
-</form>
-<a href="{{ url_for('main.admin') }}">管理者ページに戻る</a>
+</div>
 {% endblock %}

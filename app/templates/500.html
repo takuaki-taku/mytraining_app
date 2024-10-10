@@ -1,7 +1,15 @@
 {% extends "base.html" %}
 
+{% block title %}お探しのページは見つかりません | {{ config.site_name }} {% endblock %}
 {% block content %}
-<h1>ページが見つかりません</h1>
-<p>申し訳ありませんが、お探しのページは見つかりませんでした。</p>
-<p><a href="{{ url_for('main.index') }}">ホームページに戻る</a></p>
+<div class="container mx-auto">
+    <h1 class="text-3xl font-bold text-center">ページが見つかりません</h1>
+    <p class="text-center">お探しのページが見つからないようです。URLが間違っているか、ページが移動または削除された可能性があります。</p>
+
+    <div class="flex justify-center">
+        <p><a href="{{ url_for('main.index') }}">ホームページに戻る</a></p>
+    </div>
+
+
+</div>
 {% endblock %}
