@@ -65,7 +65,10 @@ training_app/
 ├── .gitignore
 ├── config.py
 ├── requirements.txt
+├── docker/
+│   └── Dockerfile
 └── run.py
+
 
 
 ## 使用方法
@@ -110,3 +113,26 @@ db.session.commit()
 
 このプロジェクトは [ライセンス名] のもとで公開されています。詳細は `LICENSE` ファイルを参照してください。
 
+## Docker コンテナ化
+
+このアプリケーションは Docker コンテナとして実行できます。
+
+1. Dockerfile を使用してイメージをビルドします。
+```bash
+docker build -f ./docker/Dockerfile -t training_app . 
+```
+
+2. イメージからコンテナを実行します。
+```bash
+docker run -p 5000:5000 training_app
+```
+
+3. ブラウザで `http://localhost:5000` にアクセスしてアプリケーションにアクセスします。
+
+## 貢献
+
+バグの報告や新機能の提案は、Issueを作成してください。プルリクエストも歓迎します。
+
+## ライセンス
+
+このプロジェクトは [ライセンス名] のもとで公開されています。詳細は `LICENSE` ファイルを参照してください。
