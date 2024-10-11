@@ -1,4 +1,5 @@
 # トレーニング管理アプリケーション
+#The English version of this README is included at the end.
 
 ## 概要
 このアプリケーションは、ユーザーがトレーニングの進捗を追跡し、管理者がトレーニングとユーザーを管理できるウェブベースのシステムです。Flask、SQLAlchemy、Flask-Loginを使用して構築されています。
@@ -136,3 +137,135 @@ docker run -p 5000:5000 training_app
 ## ライセンス
 
 このプロジェクトは [ライセンス名] のもとで公開されています。詳細は `LICENSE` ファイルを参照してください。
+
+
+
+```markdown
+## Setup
+1. Clone the repository
+
+   ```bash
+   git clone https://github.com/takuaki-taku/mytraining_app.git
+   cd training_app
+   ```
+
+2. Create and activate a virtual environment
+
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # For Windows: venv\Scripts\activate
+   ```
+
+3. Install the required packages
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Initialize the database
+
+   ```bash
+   flask db init
+   flask db migrate
+   flask db upgrade
+   ```
+
+5. Run the application
+
+   ```bash
+   flask run
+   ```
+
+## Project Structure
+
+```
+training_app/
+├── app/
+│   ├── __init__.py
+│   ├── auth/
+│   │   ├── __init__.py
+│   │   └── routes.py
+│   ├── main/
+│   │   ├── __init__.py
+│   │   └── routes.py
+│   ├── models.py
+│   └── templates/
+│       ├── auth/
+│       └── main/
+├── migrations/
+├── .gitignore
+├── config.py
+├── requirements.txt
+├── docker/
+│   └── Dockerfile
+└── run.py
+```
+
+## Usage
+1. Access `http://localhost:5000` in your browser.
+2. If you are a new user, register an account.
+3. After logging in, you can view the training list and your progress.
+4. Administrators can manage users and training from the admin page.
+
+## Sample Accounts for Confirmation
+**Admin**
+- Username: `admin`
+- Password: `your-admin-password`
+
+**General User**
+- Username: `sample`
+- Password: `sample01`
+
+## Creating an Admin Account
+1. While the application is running, open another terminal window.
+2. Start the Flask shell.
+
+   ```bash
+   flask shell
+   ```
+
+3. Run the following commands to create an admin account.
+
+   ```python
+   from app import db
+   from app.models import User
+   admin = User(username='admin', is_admin=True)
+   admin.set_password('your-password')
+   db.session.add(admin)
+   db.session.commit()
+   ```
+
+## Contribution
+
+Please create an issue for bug reports or feature suggestions. Pull requests are also welcome.
+
+## License
+
+This project is licensed under [license name]. Please refer to the `LICENSE` file for details.
+
+## Docker Containerization
+
+This application can be run as a Docker container.
+
+1. Build the image using the Dockerfile.
+
+   ```bash
+   docker build -f ./docker/Dockerfile -t training_app .
+   ```
+
+2. Run the container from the image.
+
+   ```bash
+   docker run -p 5000:5000 training_app
+   ```
+
+3. Access the application by visiting `http://localhost:5000` in your browser.
+
+## Contribution
+
+Please create an issue for bug reports or feature suggestions. Pull requests are also welcome.
+
+## License
+
+This project is licensed under [license name]. Please refer to the `LICENSE` file for details.
+```
