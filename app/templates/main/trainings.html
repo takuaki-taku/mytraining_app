@@ -1,39 +1,95 @@
 {% extends "base.html" %}
 
-{% block content %}
-<h1>トレーニング一覧</h1>
-{% for training in trainings %}
-    <div class="training">
-        <h2>{{ training.name }}</h2>
-        <p>カテゴリー: {{ training.category }}</p>
-        <h3>説明</h3>
-        <p>{{ training.description }}</p>
-        <h3>意識するポイント</h3>
-        <p>{{ training.points }}</p>
-        {% if training.video_url %}
-            <h3>参考動画</h3>
-        
-        <iframe width="560" height="315" src="{{ training.video_url | safe }}" title="YouTube video player" 
-        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-        </iframe>
-        {% endif %}
-        
-        {% if current_user.is_authenticated %}
-            <form action="{{ url_for('main.update_training_status', training_id=training.id) }}" method="POST">
-                <label for="status_{{ training.id }}">ステータス:</label>
-                <select name="status" id="status_{{ training.id }}">
-                    <option value="not_started" {% if user_trainings.get(training.id) == 'not_started' %}selected{% endif %}>未開始</option>
-                    <option value="in_progress" {% if user_trainings.get(training.id) == 'in_progress' %}selected{% endif %}>取り組み中</option>
-                    <option value="completed" {% if user_trainings.get(training.id) == 'completed' %}selected{% endif %}>完了</option>
-                </select>
-                <button type="submit">更新</button>
-            </form>
-        {% endif %}
-    </div>
-{% endfor %}
+{% block title %}トレーニング一覧{% endblock %}
 
-{% if current_user.is_authenticated and current_user.is_admin %}
-    <a href="{{ url_for('main.add_training') }}" class="btn">新しいトレーニングを追加</a>
-{% endif %}
+{% block header %}トレーニング一覧{% endblock %}
+
+{% block content %}
+
+
+<div class="bg-white">
+    <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+        <form id="search-form" class="mb-8">
+            <div class="flex rounded-md shadow-sm">
+                <input type="text" name="search" placeholder="トレーニングを検索" value="{{ search }}"
+                    class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <button type="submit"
+                    class="relative -ml-px inline-flex items-center gap-x-1.5 rounded-r-md px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                    検索
+                </button>
+            </div>
+        </form>
+
+        <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+            {% for training in trainings %}
+            <div class="group">
+
+                <h3 class="mt-4 text-sm text-gray-700">{{ training.name }}</h3>
+                <p class="mt-1 text-lg font-medium text-gray-900">{{ training.category }}</p>
+                <button
+                    class="mt-2 training-details-button inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    data-id="{{ training.id }}">
+                    詳細を表示
+                </button>
+                <div class="training-details mt-4 hidden">
+                    <p class="text-sm text-gray-500"><span class="font-semibold">説明:</span> <span
+                            class="description"></span></p>
+                    <p class="text-sm text-gray-500"><span class="font-semibold">ポイント:</span> <span
+                            class="points"></span></p>
+                    <p class="text-sm text-gray-500"><span class="font-semibold">ビデオURL:</span> <a
+                            class="video-url text-indigo-600 hover:text-indigo-500" href="#" target="_blank"></a></p>
+                    {% if current_user.is_authenticated %}
+                    <form action="{{ url_for('main.update_training_status', training_id=training.id) }}" method="post"
+                        class="mt-4">
+                        <select name="status"
+                            class="block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            <option value="未着手" {% if user_trainings.get(training.id)=='未着手' %}selected{% endif %}>未着手
+                            </option>
+                            <option value="取り組み中" {% if user_trainings.get(training.id)=='取り組み中' %}selected{% endif %}>
+                                取り組み中</option>
+                            <option value="完了" {% if user_trainings.get(training.id)=='完了' %}selected{% endif %}>完了
+                            </option>
+                        </select>
+                        <button type="submit"
+                            class="mt-2 inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                            更新
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const trainingList = document.querySelector('.grid');
+        trainingList.addEventListener('click', function (e) {
+            if (e.target.classList.contains('training-details-button')) {
+                e.preventDefault();
+                const trainingId = e.target.dataset.id;
+                const detailsDiv = e.target.nextElementSibling;
+
+                if (detailsDiv.classList.contains('hidden')) {
+                    fetch(`/training/${trainingId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            detailsDiv.querySelector('.description').textContent = data.description;
+                            detailsDiv.querySelector('.points').textContent = data.points;
+                            const videoUrl = detailsDiv.querySelector('.video-url');
+                            videoUrl.href = data.video_url;
+                            videoUrl.textContent = data.video_url;
+                            detailsDiv.classList.remove('hidden');
+                            e.target.textContent = '詳細を隠す';
+                        });
+                } else {
+                    detailsDiv.classList.add('hidden');
+                    e.target.textContent = '詳細を表示';
+                }
+            }
+        });
+    });
+</script>
 {% endblock %}

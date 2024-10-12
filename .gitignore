@@ -89,8 +89,10 @@ db.sqlite3
 db.sqlite3-journal
 
 # Flask stuff:
-instance/
+instance/*
 .webassets-cache
+!instance/training_app.db
+!instance/app.db
 
 # Scrapy stuff:
 .scrapy
@@ -188,3 +190,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 400: Invalid request
+
+
+
+

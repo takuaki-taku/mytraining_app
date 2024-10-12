@@ -1,15 +1,17 @@
 {% extends "base.html" %}
 
+{% block title %}トレーニング全体像{% endblock %}
+
+{% block header %}トレーニング全体像{% endblock %}
+
 {% block content %}
-<h1>トレーニングの全体像</h1>
-<img src="{{ url_for('static', filename='data/ppramid.jpeg') }}" alt="トレーニング概要図" class="index-image">
-<p>
-    「小さな一歩が、大きな未来を創る。」
-
-今日できることを積み重ねて、目標に近づきましょう。
-
-あなたの成長を、このアプリがサポートします。
-
-
-</p>
+<div class="container mx-auto">
+    <h1 class="text-3xl font-bold mb-4"></h1>
+    <img src="{{ url_for('static', filename='data/ppramid.jpeg') }}" alt="トレーニング概要図" class="w-full rounded-md">
+    <p class="text-lg leading-relaxed mt-4">
+        「小さな一歩が、大きな未来を創る。」<br>
+        今日できることを積み重ねて、目標に近づきましょう。<br>
+        あなたの成長を、このアプリがサポートします。
+    </p>
+</div>
 {% endblock %}

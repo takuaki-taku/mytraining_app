@@ -1,33 +1,65 @@
 {% extends "base.html" %}
 
+{% block title %}進捗状況{% endblock %}
+{% block header %}進捗状況{% endblock %}
+
 {% block content %}
-<h1>個人のトレーニング実施状況</h1>
+<div class="container mx-auto px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
+    <h1 class="text-3xl font-bold text-gray-900"></h1>
 
-<h2>現在行っているトレーニング</h2>
-<table>
-    <tr>
-        <th>トレーニング名</th>
-        <th>カテゴリー</th>
-    </tr>
-    {% for training in in_progress %}
-    <tr>
-        <td>{{ training.name }}</td>
-        <td>{{ training.category }}</td>
-    </tr>
-    {% endfor %}
-</table>
+    <div class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+        <div class="text-xl font-bold mb-2">現在進行中</div>
+        {% for item in in_progress %}
+        <div class="rounded-lg shadow-md bg-white overflow-hidden">
+            <div class="p-6">
+                <h3 class="text-lg font-semibold">{{ item.training.name }}</h3>
+                <div class="flex items-center mt-2">
+                    <span class="inline-block mr-2 text-sm font-medium text-gray-700">ステータス:</span>
+                    <span class="rounded-full bg-blue-500 px-2 py-1 text-xs font-semibold text-white">進行中</span>
+                </div>
+                <a href="{{ url_for('main.trainings', selected_training=item.training.id) }}"
+                    class="inline-flex items-center px-4 py-2 mt-4 bg-blue-500 border border-transparent rounded-md font-semibold text-white hover:bg-blue-700">詳細を見る</a>
+            </div>
+        </div>
+        {% endfor %}
 
-<h2>達成したトレーニング</h2>
-<table>
-    <tr>
-        <th>トレーニング名</th>
-        <th>カテゴリー</th>
-    </tr>
-    {% for training in completed %}
-    <tr>
-        <td>{{ training.name }}</td>
-        <td>{{ training.category }}</td>
-    </tr>
-    {% endfor %}
-</table>
+        <div class="text-xl font-bold mb-2">完了</div>
+        {% for item in completed %}
+        <div class="rounded-lg shadow-md bg-white overflow-hidden">
+            <div class="p-6">
+                <h3 class="text-lg font-semibold">{{ item.training.name }}</h3>
+                <div class="flex items-center mt-2">
+                    <span class="inline-block mr-2 text-sm font-medium text-gray-700">ステータス:</span>
+                    <span class="rounded-full bg-green-500 px-2 py-1 text-xs font-semibold text-white">完了</span>
+                </div>
+                <a href="{{ url_for('main.trainings', selected_training=item.training.id) }}"
+                    class="inline-flex items-center px-4 py-2 mt-4 bg-blue-500 border border-transparent rounded-md font-semibold text-white hover:bg-blue-700">詳細を見る</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="mt-8">
+        <a href="{{ url_for('main.trainings') }}"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">全てのトレーニング一覧へ</a>
+    </div>
+</div>
+
+<script>
+    // ページロード時に実行
+    document.addEventListener('DOMContentLoaded', function () {
+        // URLパラメータからselected_trainingの値を取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedTrainingId = urlParams.get('selected_training');
+
+        if (selectedTrainingId) {
+            // 選択されたトレーニングのIDを持つ要素を取得
+            const selectedTrainingElement = document.querySelector(`[data-training-id="${selectedTrainingId}"]`);
+
+            // 詳細表示ボタンをクリックするイベントを発火
+            selectedTrainingElement.querySelector('.training-details-button').click();
+        }
+    });
+</script>
+
 {% endblock %}
